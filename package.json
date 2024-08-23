@@ -1,0 +1,65 @@
+{
+  "name": "ts-bp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "node build/index.js",
+    "clean": "rimraf coverage build tmp",
+    "prebuild": "npm run lint",
+    "build": "tsc -p tsconfig.json",
+    "build:watch": "tsc -w -p tsconfig.json",
+    "build:release": "npm run clean && tsc -p tsconfig.release.json",
+    "lint": "eslint . -c eslint.config.mjs",
+    "test": "jest --coverage",
+    "prettier": "prettier --config .prettierrc --write .",
+    "test:watch": "jest --watch",
+    "dev": "ts-node-dev src/index.ts",
+    "prepare": "husky",
+    "db:migrate": "npx prisma migrate dev --name user-entity --create-only && npx prisma generate",
+    "db:push": "npx prisma db push"
+  },
+  "keywords": [],
+  "author": "samn_krki@live.com",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "http-status": "^1.7.4",
+    "husky": "^9.1.5",
+    "winston": "^3.14.2",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.4.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@eslint/js": "^9.9.0",
+    "@tsconfig/node20": "^20.1.4",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.4.2",
+    "@typescript-eslint/eslint-plugin": "^8.2.0",
+    "@typescript-eslint/parser": "^8.2.0",
+    "eslint": "^9.9.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.9.0",
+    "lint-staged": "^15.2.9",
+    "prettier": "^3.3.3",
+    "prisma": "^5.18.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.2.0"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "eslint --max-warnings=0",
+      "prettier --write"
+    ],
+    "**/*.{html,json,css,scss,md,mdx}": [
+      "prettier -w"
+    ]
+  }
+}
