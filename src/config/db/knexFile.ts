@@ -1,7 +1,7 @@
 import { Knex } from 'knex'
-import path from 'path'
+import * as path from 'path'
 import configuration from '../configuration'
-import camelCase from 'camelcase'
+import camelCase from 'lodash.camelcase'
 
 const dbConfig: Knex.Config = {
   client: 'pg',
@@ -17,7 +17,7 @@ const dbConfig: Knex.Config = {
     timestampFilenamePrefix: true,
   },
   compileSqlOnError: false,
-  postProcessResponse: (result, _queryContext) => {
+  postProcessResponse: async (result, _queryContext) => {
     // TODO: add special case for raw results
     // (depends on dialect)
     if (Array.isArray(result)) {

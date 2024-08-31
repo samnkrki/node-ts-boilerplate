@@ -1,7 +1,7 @@
-import configuration from './config/configuration'
 import express from 'express'
 import helmet from 'helmet'
 import cors from 'cors'
+import configuration from './config/configuration'
 import { requestLogger } from './middlewares'
 import appRoutes from './modules/index.route'
 import { logger } from './helpers'
