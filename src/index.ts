@@ -6,6 +6,7 @@ import { requestLogger } from './middlewares'
 import appRoutes from './modules/index.route'
 import { logger } from './helpers'
 import { handleApiError } from './middlewares/error-handler.middleware'
+import db from './config/db'
 
 const app = express()
 const port = configuration.port
@@ -17,6 +18,16 @@ app.use(express.json())
 app.use(requestLogger)
 
 // database connection
+async function connectDatabase() {
+  logger.info('Connecting to database')
+  try {
+    await db.raw('SELECT 1+1 AS result')
+    logger.info('Connected to database')
+  } catch (err) {
+    logger.error('Error connecting to database', err)
+    process.exit(1)
+  }
+}
 
 // routes register
 app.use('/api', appRoutes).use(handleApiError)
@@ -27,9 +38,22 @@ app.get('/health', (_req, res) => {
   res.send('Server is up and running!')
 })
 
+// Handle graceful shutdown
+process.on('SIGINT', async () => {
+  await db.destroy()
+  process.exit(0)
+})
+
+process.on('SIGTERM', async () => {
+  await db.destroy()
+  process.exit(0)
+})
+
 // start the server
-app.listen(port, () => {
-  logger.log({ level: 'info', message: `Server is running at http://localhost:${port}` })
+connectDatabase().then(() => {
+  app.listen(port, () => {
+    logger.info(`Server is running on port ${port}`)
+  })
 })
 
 export default app
