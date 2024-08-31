@@ -26,9 +26,11 @@ function bootstrap(app: express.Application): void {
       logger.info('Connected to database')
     } catch (err) {
       logger.error('Error connecting to database', err)
-      process.exit(1)
+      // process.exit(1)
     }
   }
+
+  connectDatabase()
 
   // routes register
   app.use('/api', appRoutes).use(handleApiError)
@@ -51,10 +53,8 @@ function bootstrap(app: express.Application): void {
   })
 
   // start the server
-  connectDatabase().then(() => {
-    app.listen(port, () => {
-      logger.info(`Server is running on port ${port}`)
-    })
+  app.listen(port, () => {
+    logger.info(`Server is running on port ${port}`)
   })
 }
 bootstrap(app)
