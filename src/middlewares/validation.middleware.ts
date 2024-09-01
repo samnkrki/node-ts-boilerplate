@@ -5,7 +5,7 @@ type RequestType = 'body' | 'query' | 'params'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SchemaType = Partial<Record<RequestType, z.ZodObject<any, any>>>
 
-function validateData(schema: SchemaType) {
+export function validateData(schema: SchemaType) {
   return (req: Request, res: Response, next: NextFunction) => {
     // validate request query, params and body
     Object.keys(schema).forEach((key: string) => {
@@ -16,5 +16,3 @@ function validateData(schema: SchemaType) {
     next()
   }
 }
-
-export default validateData

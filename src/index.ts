@@ -2,11 +2,10 @@ import express from 'express'
 import helmet from 'helmet'
 import cors from 'cors'
 import configuration from './config/configuration'
-import { requestLogger } from './middlewares'
 import appRoutes from './modules/index.route'
 import { logger } from './helpers'
-import { handleApiError } from './middlewares/error-handler.middleware'
 import db from './config/db'
+import { handleApiError, requestLogger } from './middlewares'
 
 const app = express()
 function bootstrap(app: express.Application): void {

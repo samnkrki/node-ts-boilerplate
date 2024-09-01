@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import featureController from './feature.controller'
-import { validateData } from '../../middlewares'
 import featureSchema from './feature.schema'
+import { validateData } from '../../middlewares'
 
 const router = Router()
 
